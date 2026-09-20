@@ -1,88 +1,56 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #FF5A36;
-  --color-primary-dark: #E04420;
-  --color-primary-light: #FFF0EC;
-  --color-surface: #FFF9F5;
-  --color-surface-alt: #FFFFFF;
-  --color-text: #171717;
-  --color-text-secondary: #6B7280;
-  --color-text-muted: #9CA3AF;
-  --color-border: #E5E7EB;
-  --color-border-light: #F3F4F6;
-  --color-success: #16A34A;
-  --color-warning: #F59E0B;
-  --color-accent: #059669;
+  --color-brand: #FF5A36;
+  --color-brand-dark: #E04420;
+  --color-brand-light: #FFF0EC;
+  --color-brand-50: #FFF7F4;
+  --color-cream: #FFF9F5;
+  --color-ink: #1A1A1A;
+  --color-ink-light: #4B5563;
+  --color-ink-muted: #9CA3AF;
+  --color-line: #E5E7EB;
+  --color-line-light: #F3F4F6;
+  --color-green: #16A34A;
+  --color-amber: #F59E0B;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-surface);
-  color: var(--color-text);
+  background: #FFF9F5;
+  color: #1A1A1A;
 }
 
-/* Focus styles */
+a, button { transition: all 0.15s ease; }
+
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #FF5A36;
   outline-offset: 2px;
 }
 
-/* Smooth transitions */
-a, button {
-  transition: all 0.2s ease;
-}
+#root { min-height: 100vh; }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
+.line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-#root {
-  min-height: 100vh;
-}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-.line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Food image placeholder gradient */
+.food-img-bg {
+  background: linear-gradient(135deg, #FFF0EC 0%, #FED7AA 50%, #FDBA74 100%);
 }
-
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.food-img-bg-alt {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FCD34D 100%);
 }
-
-/* Hide scrollbar for horizontal scroll */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+.food-img-bg-green {
+  background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 50%, #6EE7B7 100%);
 }
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.food-img-bg-warm {
+  background: linear-gradient(135deg, #FFE4E6 0%, #FECDD3 50%, #FDA4AF 100%);
 }

@@ -42,9 +42,9 @@ const KitchenDisplay: React.FC = () => {
           </div>
           <div className="flex items-center gap-6">
             <div className="flex gap-4 text-sm">
-              <span className="flex items-center gap-2"><span className="w-2 h-2 bg-warning rounded-full" />{pendingCount} pending</span>
+              <span className="flex items-center gap-2"><span className="w-2 h-2 bg-amber rounded-full" />{pendingCount} pending</span>
               <span className="flex items-center gap-2"><span className="w-2 h-2 bg-blue-400 rounded-full" />{preparingCount} preparing</span>
-              <span className="flex items-center gap-2"><span className="w-2 h-2 bg-success rounded-full" />{readyCount} ready</span>
+              <span className="flex items-center gap-2"><span className="w-2 h-2 bg-green rounded-full" />{readyCount} ready</span>
             </div>
             <div className="text-sm text-gray-400">{currentTime.toLocaleTimeString()}</div>
           </div>
@@ -65,7 +65,7 @@ const KitchenDisplay: React.FC = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredOrders.map(order => (
-              <div key={order.id} className={`rounded-xl border-2 p-4 ${order.status === 'pending' ? 'border-warning bg-warning/10' : order.status === 'preparing' ? 'border-blue-500 bg-blue-500/10' : 'border-success bg-success/10'}`}>
+              <div key={order.id} className={`rounded-xl border-2 p-4 ${order.status === 'pending' ? 'border-amber bg-amber/10' : order.status === 'preparing' ? 'border-blue-500 bg-blue-500/10' : 'border-green bg-green/10'}`}>
                 <div className="flex items-center justify-between mb-3"><span className="font-bold text-lg">{order.id}</span><span className="text-xs text-gray-400">{getTimeElapsed(order.createdAt)}</span></div>
                 <div className="text-sm text-gray-300 mb-3 space-y-1">
                   <p><span className="font-medium text-white">Customer:</span> {order.customerName}</p>
@@ -73,11 +73,11 @@ const KitchenDisplay: React.FC = () => {
                 </div>
                 <div className="border-t border-gray-700 pt-3 mb-3">
                   <div className="space-y-2">
-                    {order.items.map((item, i) => (<div key={i} className="bg-gray-800 rounded-lg p-2"><p className="text-sm font-medium">{item.quantity}× {item.product.name}</p>{item.notes && <p className="text-xs text-warning mt-1">📝 {item.notes}</p>}</div>))}
+                    {order.items.map((item, i) => (<div key={i} className="bg-gray-800 rounded-lg p-2"><p className="text-sm font-medium">{item.quantity}× {item.product.name}</p>{item.notes && <p className="text-xs text-amber mt-1">📝 {item.notes}</p>}</div>))}
                   </div>
                 </div>
                 {order.kitchenNotes && <div className="bg-red-500/20 border border-red-500 rounded-lg p-2 mb-3"><p className="text-xs text-red-400">⚠️ {order.kitchenNotes}</p></div>}
-                {getNextStatus(order.status) && (<button onClick={() => updateOrderStatus(order.id, getNextStatus(order.status)!)} className={`w-full py-2 rounded-lg font-medium text-sm ${order.status === 'pending' ? 'bg-warning hover:bg-yellow-600' : order.status === 'preparing' ? 'bg-blue-500 hover:bg-blue-600' : 'bg-success hover:bg-green-600'}`}>{order.status === 'pending' ? 'Start Preparing' : order.status === 'preparing' ? 'Mark Ready' : 'Complete'}</button>)}
+                {getNextStatus(order.status) && (<button onClick={() => updateOrderStatus(order.id, getNextStatus(order.status)!)} className={`w-full py-2 rounded-lg font-medium text-sm ${order.status === 'pending' ? 'bg-amber hover:bg-yellow-600' : order.status === 'preparing' ? 'bg-blue-500 hover:bg-blue-600' : 'bg-green hover:bg-green-600'}`}>{order.status === 'pending' ? 'Start Preparing' : order.status === 'preparing' ? 'Mark Ready' : 'Complete'}</button>)}
               </div>
             ))}
           </div>
