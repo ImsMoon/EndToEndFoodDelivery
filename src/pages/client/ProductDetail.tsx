@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from '../../router';
-import { Minus, Plus, ShoppingCart, ArrowLeft, Star, Check } from 'lucide-react';
+import { Minus, Plus, ArrowLeft } from 'lucide-react';
 import { products, Variant, Addon } from '../../data/mockData';
 import { useApp } from '../../context/AppContext';
 
@@ -16,21 +16,13 @@ const ProductDetail: React.FC = () => {
   const [quantity, setQuantity] = useState(1);
   const [notes, setNotes] = useState('');
   const [added, setAdded] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    setLoaded(true);
-    window.scrollTo(0, 0);
-  }, [id]);
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <span className="text-7xl block mb-4">😕</span>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Product not found</h2>
-        <p className="text-gray-500 mb-4">The product you're looking for doesn't exist.</p>
-        <button onClick={() => navigate('/menu')} className="text-orange-600 hover:underline font-medium">
-          ← Back to Menu
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 text-center">
+        <h2 className="text-2xl font-bold mb-4">Product not found</h2>
+        <button onClick={() => navigate('/menu')} className="text-black underline">
+          Back to Menu
         </button>
       </div>
     );
@@ -58,66 +50,46 @@ const ProductDetail: React.FC = () => {
   };
 
   return (
-    <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 transition-all duration-500 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
       <button
         onClick={() => window.history.back()}
-        className="flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6 font-medium group"
+        className="flex items-center gap-2 text-gray-600 hover:text-black mb-6 font-medium"
       >
-        <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform" /> Back
+        <ArrowLeft size={18} /> Back
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product Image */}
-        <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl p-8 md:p-12 flex items-center justify-center relative overflow-hidden">
-          <span className="text-[120px] md:text-[180px] lg:text-[200px] hover:scale-110 transition-transform duration-500">{product.image}</span>
-          {product.popular && (
-            <span className="absolute top-4 left-4 bg-orange-600 text-white text-sm px-4 py-2 rounded-full font-medium shadow-lg">
-              🔥 Popular Choice
-            </span>
-          )}
+        <div className="bg-gray-100 rounded-xl p-12 flex items-center justify-center">
+          <span className="text-[150px] md:text-[200px]">{product.image}</span>
         </div>
 
         {/* Product Details */}
         <div>
-          <div className="flex items-center gap-3 mb-3">
-            <span className="bg-orange-100 text-orange-600 text-xs px-3 py-1.5 rounded-full font-semibold capitalize">
-              {product.category}
-            </span>
-            <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-full">
-              <Star size={14} className="text-yellow-500 fill-yellow-500" />
-              <span className="text-sm text-gray-600 font-medium">4.8</span>
-              <span className="text-xs text-gray-400">(120+ reviews)</span>
-            </div>
-          </div>
-
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">{product.name}</h1>
-          <p className="text-gray-600 text-lg mb-6 leading-relaxed">{product.description}</p>
+          <span className="text-sm text-gray-600 capitalize mb-2 block">{product.category}</span>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
+          <p className="text-gray-600 text-lg mb-6">{product.description}</p>
           
-          <div className="flex items-baseline gap-2 mb-8">
-            <span className="text-4xl font-bold text-orange-600">${unitPrice.toFixed(2)}</span>
-            {(variantPrice > 0 || addonsPrice > 0) && (
-              <span className="text-sm text-gray-400 line-through">${product.price.toFixed(2)}</span>
-            )}
-          </div>
+          <div className="text-3xl font-bold mb-8">${unitPrice.toFixed(2)}</div>
 
           {/* Variants */}
           {product.variants.length > 1 && (
             <div className="mb-8">
-              <h3 className="font-bold text-gray-800 mb-3 text-lg">Choose Size</h3>
-              <div className="flex flex-wrap gap-3">
+              <h3 className="font-semibold text-gray-900 mb-3">Size</h3>
+              <div className="flex flex-wrap gap-2">
                 {product.variants.map(variant => (
                   <button
                     key={variant.id}
                     onClick={() => setSelectedVariant(variant)}
-                    className={`px-5 py-3 rounded-xl border-2 transition-all font-medium ${
+                    className={`px-4 py-2 rounded-lg border-2 font-medium ${
                       selectedVariant?.id === variant.id
-                        ? 'border-orange-600 bg-orange-50 text-orange-600 shadow-md shadow-orange-100'
-                        : 'border-gray-200 text-gray-600 hover:border-orange-300 hover:bg-orange-50/50'
+                        ? 'border-black bg-black text-white'
+                        : 'border-gray-300 text-gray-700 hover:border-gray-400'
                     }`}
                   >
-                    <span>{variant.name}</span>
+                    {variant.name}
                     {variant.priceModifier > 0 && (
-                      <span className="text-sm ml-2 opacity-75">(+${variant.priceModifier.toFixed(2)})</span>
+                      <span className="ml-2 text-sm">(+${variant.priceModifier.toFixed(2)})</span>
                     )}
                   </button>
                 ))}
@@ -128,7 +100,7 @@ const ProductDetail: React.FC = () => {
           {/* Addons */}
           {product.addons.length > 0 && (
             <div className="mb-8">
-              <h3 className="font-bold text-gray-800 mb-3 text-lg">Add Extras</h3>
+              <h3 className="font-semibold text-gray-900 mb-3">Add Extras</h3>
               <div className="space-y-2">
                 {product.addons.map(addon => {
                   const isSelected = selectedAddons.find(a => a.id === addon.id);
@@ -136,21 +108,14 @@ const ProductDetail: React.FC = () => {
                     <button
                       key={addon.id}
                       onClick={() => toggleAddon(addon)}
-                      className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all ${
+                      className={`w-full flex items-center justify-between p-3 rounded-lg border-2 ${
                         isSelected
-                          ? 'border-orange-600 bg-orange-50 shadow-md shadow-orange-100'
-                          : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50/30'
+                          ? 'border-black bg-gray-50'
+                          : 'border-gray-300 hover:border-gray-400'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all ${
-                          isSelected ? 'border-orange-600 bg-orange-600' : 'border-gray-300'
-                        }`}>
-                          {isSelected && <Check size={14} className="text-white" />}
-                        </div>
-                        <span className="font-medium text-gray-700">{addon.name}</span>
-                      </div>
-                      <span className="text-orange-600 font-bold">+${addon.price.toFixed(2)}</span>
+                      <span className="font-medium">{addon.name}</span>
+                      <span className="font-semibold">+${addon.price.toFixed(2)}</span>
                     </button>
                   );
                 })}
@@ -158,89 +123,43 @@ const ProductDetail: React.FC = () => {
             </div>
           )}
 
-          {/* Special Notes */}
+          {/* Notes */}
           <div className="mb-8">
-            <h3 className="font-bold text-gray-800 mb-3 text-lg">Special Instructions</h3>
+            <label className="block font-semibold text-gray-900 mb-2">Special Instructions</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any special requests? (e.g., extra crispy, no onions, allergy info...)"
-              className="w-full p-4 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-gray-700"
+              placeholder="Any special requests..."
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black resize-none"
               rows={3}
             />
           </div>
 
-          {/* Quantity & Add to Cart */}
+          {/* Quantity & Add */}
           <div className="flex items-center gap-4 mb-6">
-            <div className="flex items-center border-2 border-gray-200 rounded-xl bg-white">
+            <div className="flex items-center border border-gray-300 rounded-lg">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-3.5 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-l-xl transition-all"
+                className="p-3 hover:bg-gray-100"
               >
                 <Minus size={18} />
               </button>
-              <span className="px-5 font-bold text-gray-800 text-lg min-w-[3rem] text-center">{quantity}</span>
+              <span className="px-4 font-semibold">{quantity}</span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="p-3.5 text-gray-600 hover:text-orange-600 hover:bg-orange-50 rounded-r-xl transition-all"
+                className="p-3 hover:bg-gray-100"
               >
                 <Plus size={18} />
               </button>
             </div>
             <button
               onClick={handleAddToCart}
-              className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-lg transition-all ${
-                added
-                  ? 'bg-green-600 text-white shadow-lg shadow-green-200'
-                  : 'bg-orange-600 text-white hover:bg-orange-700 hover:shadow-lg hover:shadow-orange-200 hover:scale-[1.02]'
+              className={`flex-1 py-3 rounded-lg font-semibold ${
+                added ? 'bg-green-600 text-white' : 'bg-black text-white hover:bg-gray-800'
               }`}
             >
-              {added ? (
-                <>
-                  <Check size={20} />
-                  Added to Cart!
-                </>
-              ) : (
-                <>
-                  <ShoppingCart size={20} />
-                  Add to Cart — ${totalPrice.toFixed(2)}
-                </>
-              )}
+              {added ? 'Added!' : `Add to Cart — $${totalPrice.toFixed(2)}`}
             </button>
-          </div>
-
-          {/* Price Breakdown */}
-          <div className="mt-6 p-5 bg-gradient-to-br from-gray-50 to-orange-50/30 rounded-xl border border-gray-100">
-            <h4 className="font-bold text-gray-800 mb-3">Price Breakdown</h4>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between text-gray-600">
-                <span>Base price</span>
-                <span className="font-medium">${product.price.toFixed(2)}</span>
-              </div>
-              {variantPrice > 0 && (
-                <div className="flex justify-between text-gray-600">
-                  <span>{selectedVariant?.name}</span>
-                  <span className="font-medium">+${variantPrice.toFixed(2)}</span>
-                </div>
-              )}
-              {selectedAddons.map(addon => (
-                <div key={addon.id} className="flex justify-between text-gray-600">
-                  <span>{addon.name}</span>
-                  <span className="font-medium">+${addon.price.toFixed(2)}</span>
-                </div>
-              ))}
-              {quantity > 1 && (
-                <div className="flex justify-between text-gray-600">
-                  <span>Quantity</span>
-                  <span className="font-medium">×{quantity}</span>
-                </div>
-              )}
-              <hr className="my-3 border-gray-200" />
-              <div className="flex justify-between font-bold text-gray-800 text-lg">
-                <span>Total</span>
-                <span className="text-orange-600">${totalPrice.toFixed(2)}</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
