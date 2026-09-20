@@ -54,122 +54,76 @@ const POS: React.FC = () => {
   if (paymentComplete) {
     return (
       <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="bg-white rounded-xl p-12 text-center">
-          <Check size={48} className="text-green-600 mx-auto mb-4" />
+        <div className="bg-white rounded-2xl p-12 text-center">
+          <Check size={48} className="text-success mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-2">Payment Successful</h2>
-          <p className="text-gray-600">Total: ${total.toFixed(2)}</p>
+          <p className="text-text-secondary">Total: ${total.toFixed(2)}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-surface flex flex-col">
+      <header className="bg-white border-b border-border px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Link to="/" className="text-gray-400 hover:text-black"><ArrowLeft size={20} /></Link>
+          <Link to="/" className="text-text-muted hover:text-text"><ArrowLeft size={20} /></Link>
           <h1 className="text-lg font-bold">POS</h1>
         </div>
-        <div className="text-sm text-gray-600">{new Date().toLocaleDateString()}</div>
+        <div className="text-sm text-text-secondary">{new Date().toLocaleDateString()}</div>
       </header>
 
       <div className="flex-1 flex">
-        {/* Products */}
         <div className="flex-1 p-4 overflow-auto">
           <div className="relative mb-4">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
-            <input
-              type="text"
-              placeholder="Search..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg bg-white"
-            />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
+            <input type="text" placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className="w-full pl-10 pr-4 py-2.5 border border-border rounded-xl bg-white" />
           </div>
-
           <div className="flex gap-2 mb-4">
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                onClick={() => setCategory(cat.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium ${
-                  category === cat.id ? 'bg-black text-white' : 'bg-white border border-gray-300'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
+            {categories.map(cat => (<button key={cat.id} onClick={() => setCategory(cat.id)} className={`px-4 py-2 rounded-xl text-sm font-medium ${category === cat.id ? 'bg-primary text-white' : 'bg-white border border-border'}`}>{cat.name}</button>))}
           </div>
-
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredProducts.map(product => (
-              <button
-                key={product.id}
-                onClick={() => addToCart(product)}
-                className="bg-white border border-gray-200 rounded-xl p-4 text-center hover:border-gray-400"
-              >
-                <span className="text-4xl block mb-2">{product.image}</span>
+              <button key={product.id} onClick={() => addToCart(product)} className="bg-white border border-border rounded-xl p-4 text-center hover:border-primary/30 hover:shadow-md transition-all">
+                <div className="aspect-square rounded-lg overflow-hidden bg-surface mb-2">
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                </div>
                 <p className="font-medium text-sm truncate">{product.name}</p>
-                <p className="font-bold text-sm mt-1">${product.price.toFixed(2)}</p>
+                <p className="font-bold text-sm text-primary mt-1">${product.price.toFixed(2)}</p>
               </button>
             ))}
           </div>
         </div>
 
-        {/* Cart */}
-        <div className="w-80 bg-white border-l border-gray-200 flex flex-col">
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center gap-2">
-              <ShoppingCart size={18} />
-              <h2 className="font-bold">Order</h2>
-              <span className="ml-auto bg-gray-100 text-xs px-2 py-1 rounded font-semibold">
-                {cart.reduce((s, i) => s + i.quantity, 0)}
-              </span>
-            </div>
+        <div className="w-80 bg-white border-l border-border flex flex-col">
+          <div className="p-4 border-b border-border">
+            <div className="flex items-center gap-2"><ShoppingCart size={18} className="text-primary" /><h2 className="font-bold">Order</h2><span className="ml-auto bg-primary-light text-primary text-xs px-2 py-1 rounded-lg font-semibold">{cart.reduce((s, i) => s + i.quantity, 0)}</span></div>
           </div>
-
           <div className="flex-1 overflow-auto p-4 space-y-3">
             {cart.length === 0 ? (
-              <div className="text-center py-8 text-gray-400">
-                <ShoppingCart size={32} className="mx-auto mb-2 opacity-50" />
-                <p className="text-sm">No items</p>
-              </div>
+              <div className="text-center py-8 text-text-muted"><ShoppingCart size={32} className="mx-auto mb-2 opacity-50" /><p className="text-sm">No items</p></div>
             ) : (
               cart.map((item, index) => (
-                <div key={index} className="flex items-center gap-3 bg-gray-50 rounded-lg p-3">
-                  <span className="text-2xl">{item.product.image}</span>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-sm truncate">{item.product.name}</p>
-                    <p className="text-xs text-gray-600">${item.product.price.toFixed(2)}</p>
-                  </div>
+                <div key={index} className="flex items-center gap-3 bg-surface rounded-xl p-3">
+                  <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0"><img src={item.product.image} alt="" className="w-full h-full object-cover" /></div>
+                  <div className="flex-1 min-w-0"><p className="font-medium text-sm truncate">{item.product.name}</p><p className="text-xs text-text-secondary">${item.product.price.toFixed(2)}</p></div>
                   <div className="flex items-center gap-1">
-                    <button onClick={() => updateQty(index, -1)} className="w-6 h-6 rounded bg-gray-200 flex items-center justify-center hover:bg-gray-300">
-                      <Minus size={12} />
-                    </button>
+                    <button onClick={() => updateQty(index, -1)} className="w-6 h-6 rounded bg-gray-200 flex items-center justify-center hover:bg-gray-300"><Minus size={12} /></button>
                     <span className="w-6 text-center text-sm font-medium">{item.quantity}</span>
-                    <button onClick={() => updateQty(index, 1)} className="w-6 h-6 rounded bg-gray-200 flex items-center justify-center hover:bg-gray-300">
-                      <Plus size={12} />
-                    </button>
+                    <button onClick={() => updateQty(index, 1)} className="w-6 h-6 rounded bg-gray-200 flex items-center justify-center hover:bg-gray-300"><Plus size={12} /></button>
                   </div>
-                  <button onClick={() => updateQty(index, -item.quantity)} className="text-red-400 hover:text-red-600">
-                    <Trash2 size={14} />
-                  </button>
+                  <button onClick={() => updateQty(index, -item.quantity)} className="text-red-400 hover:text-red-600"><Trash2 size={14} /></button>
                 </div>
               ))
             )}
           </div>
-
-          <div className="border-t border-gray-200 p-4">
+          <div className="border-t border-border p-4">
             <div className="space-y-2 text-sm mb-4">
-              <div className="flex justify-between"><span className="text-gray-600">Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span className="text-gray-600">Tax</span><span>${tax.toFixed(2)}</span></div>
-              <div className="flex justify-between font-bold text-lg pt-2 border-t border-gray-200"><span>Total</span><span>${grandTotal.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-text-secondary">Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-text-secondary">Tax</span><span>${tax.toFixed(2)}</span></div>
+              <div className="flex justify-between font-bold text-lg pt-2 border-t border-border"><span>Total</span><span className="text-primary">${grandTotal.toFixed(2)}</span></div>
             </div>
-            {cart.length > 0 && (
-              <button onClick={handlePayment} className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800">
-                Pay ${grandTotal.toFixed(2)}
-              </button>
-            )}
+            {cart.length > 0 && (<button onClick={handlePayment} className="w-full bg-primary hover:bg-primary-dark text-white py-3 rounded-xl font-bold transition-colors">Pay ${grandTotal.toFixed(2)}</button>)}
           </div>
         </div>
       </div>

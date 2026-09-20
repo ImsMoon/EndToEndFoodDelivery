@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from '../../router';
-import { Minus, Plus, ArrowLeft } from 'lucide-react';
+import { Minus, Plus, ShoppingCart, ArrowLeft, Star, Check } from 'lucide-react';
 import { products, Variant, Addon } from '../../data/mockData';
 import { useApp } from '../../context/AppContext';
 
@@ -19,10 +19,10 @@ const ProductDetail: React.FC = () => {
 
   if (!product) {
     return (
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <h2 className="text-2xl font-bold mb-4">Product not found</h2>
-        <button onClick={() => navigate('/menu')} className="text-black underline">
-          Back to Menu
+        <button onClick={() => navigate('/menu')} className="text-primary hover:underline font-semibold">
+          ← Back to Menu
         </button>
       </div>
     );
@@ -50,41 +50,55 @@ const ProductDetail: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <button
         onClick={() => window.history.back()}
-        className="flex items-center gap-2 text-gray-600 hover:text-black mb-6 font-medium"
+        className="flex items-center gap-2 text-text-secondary hover:text-primary mb-6 font-medium"
       >
         <ArrowLeft size={18} /> Back
       </button>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Product Image */}
-        <div className="bg-gray-100 rounded-xl p-12 flex items-center justify-center">
-          <span className="text-[150px] md:text-[200px]">{product.image}</span>
+        <div className="bg-white rounded-3xl overflow-hidden border border-border">
+          <img 
+            src={product.image} 
+            alt={product.name}
+            className="w-full aspect-square object-cover"
+          />
         </div>
 
         {/* Product Details */}
         <div>
-          <span className="text-sm text-gray-600 capitalize mb-2 block">{product.category}</span>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{product.name}</h1>
-          <p className="text-gray-600 text-lg mb-6">{product.description}</p>
+          <div className="flex items-center gap-3 mb-3">
+            <span className="bg-primary-light text-primary text-xs px-3 py-1.5 rounded-lg font-semibold capitalize">
+              {product.category}
+            </span>
+            <div className="flex items-center gap-1">
+              <Star size={14} className="fill-warning text-warning" />
+              <span className="text-sm font-medium text-text">4.8</span>
+              <span className="text-xs text-text-muted">(120+ reviews)</span>
+            </div>
+          </div>
+
+          <h1 className="text-3xl lg:text-4xl font-bold text-text mb-4">{product.name}</h1>
+          <p className="text-lg text-text-secondary mb-6 leading-relaxed">{product.description}</p>
           
-          <div className="text-3xl font-bold mb-8">${unitPrice.toFixed(2)}</div>
+          <div className="text-4xl font-bold text-primary mb-8">${unitPrice.toFixed(2)}</div>
 
           {/* Variants */}
           {product.variants.length > 1 && (
             <div className="mb-8">
-              <h3 className="font-semibold text-gray-900 mb-3">Size</h3>
-              <div className="flex flex-wrap gap-2">
+              <h3 className="font-bold text-text mb-3 text-lg">Size</h3>
+              <div className="flex flex-wrap gap-3">
                 {product.variants.map(variant => (
                   <button
                     key={variant.id}
                     onClick={() => setSelectedVariant(variant)}
-                    className={`px-4 py-2 rounded-lg border-2 font-medium ${
+                    className={`px-5 py-3 rounded-xl border-2 font-medium transition-colors ${
                       selectedVariant?.id === variant.id
-                        ? 'border-black bg-black text-white'
-                        : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                        ? 'border-primary bg-primary-light text-primary'
+                        : 'border-border text-text-secondary hover:border-primary/30'
                     }`}
                   >
                     {variant.name}
@@ -100,7 +114,7 @@ const ProductDetail: React.FC = () => {
           {/* Addons */}
           {product.addons.length > 0 && (
             <div className="mb-8">
-              <h3 className="font-semibold text-gray-900 mb-3">Add Extras</h3>
+              <h3 className="font-bold text-text mb-3 text-lg">Add Extras</h3>
               <div className="space-y-2">
                 {product.addons.map(addon => {
                   const isSelected = selectedAddons.find(a => a.id === addon.id);
@@ -108,14 +122,21 @@ const ProductDetail: React.FC = () => {
                     <button
                       key={addon.id}
                       onClick={() => toggleAddon(addon)}
-                      className={`w-full flex items-center justify-between p-3 rounded-lg border-2 ${
+                      className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-colors ${
                         isSelected
-                          ? 'border-black bg-gray-50'
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? 'border-primary bg-primary-light'
+                          : 'border-border hover:border-primary/30'
                       }`}
                     >
-                      <span className="font-medium">{addon.name}</span>
-                      <span className="font-semibold">+${addon.price.toFixed(2)}</span>
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                          isSelected ? 'border-primary bg-primary' : 'border-border'
+                        }`}>
+                          {isSelected && <Check size={12} className="text-white" />}
+                        </div>
+                        <span className="font-medium text-text">{addon.name}</span>
+                      </div>
+                      <span className="font-semibold text-primary">+${addon.price.toFixed(2)}</span>
                     </button>
                   );
                 })}
@@ -125,40 +146,40 @@ const ProductDetail: React.FC = () => {
 
           {/* Notes */}
           <div className="mb-8">
-            <label className="block font-semibold text-gray-900 mb-2">Special Instructions</label>
+            <label className="block font-bold text-text mb-2 text-lg">Special Instructions</label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Any special requests..."
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-black resize-none"
+              className="w-full p-4 bg-white border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 resize-none"
               rows={3}
             />
           </div>
 
           {/* Quantity & Add */}
           <div className="flex items-center gap-4 mb-6">
-            <div className="flex items-center border border-gray-300 rounded-lg">
+            <div className="flex items-center bg-white border border-border rounded-xl">
               <button
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="p-3 hover:bg-gray-100"
+                className="p-3.5 hover:bg-gray-50"
               >
                 <Minus size={18} />
               </button>
-              <span className="px-4 font-semibold">{quantity}</span>
+              <span className="px-5 font-bold text-lg">{quantity}</span>
               <button
                 onClick={() => setQuantity(quantity + 1)}
-                className="p-3 hover:bg-gray-100"
+                className="p-3.5 hover:bg-gray-50"
               >
                 <Plus size={18} />
               </button>
             </div>
             <button
               onClick={handleAddToCart}
-              className={`flex-1 py-3 rounded-lg font-semibold ${
-                added ? 'bg-green-600 text-white' : 'bg-black text-white hover:bg-gray-800'
+              className={`flex-1 py-4 rounded-xl font-bold text-lg transition-colors ${
+                added ? 'bg-success text-white' : 'bg-primary hover:bg-primary-dark text-white'
               }`}
             >
-              {added ? 'Added!' : `Add to Cart — $${totalPrice.toFixed(2)}`}
+              {added ? '✓ Added to Cart!' : `Add to Cart — $${totalPrice.toFixed(2)}`}
             </button>
           </div>
         </div>
