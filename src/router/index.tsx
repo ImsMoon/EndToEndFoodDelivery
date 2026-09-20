@@ -15,14 +15,31 @@ const RouterContext = createContext<RouterContextType>({
 export const useRouter = () => useContext(RouterContext);
 
 export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [path, setPath] = useState(window.location.hash.slice(1) || '/');
+  const getInitialPath = () => {
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      return hash.slice(1);
+    }
+    return '/';
+  };
+
+  const [path, setPath] = useState(getInitialPath);
 
   useEffect(() => {
     const handleHashChange = () => {
-      setPath(window.location.hash.slice(1) || '/');
+      const newPath = getInitialPath();
+      setPath(newPath);
     };
+    
     window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    
+    // Also listen for popstate for browser back/forward
+    window.addEventListener('popstate', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('popstate', handleHashChange);
+    };
   }, []);
 
   const navigate = (to: string) => {
@@ -49,17 +66,25 @@ export const Link: React.FC<{
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
-}> = ({ to, children, className, onClick }) => {
+  style?: React.CSSProperties;
+}> = ({ to, children, className, onClick, style }) => {
   const { navigate } = useRouter();
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     onClick?.();
     navigate(to);
+    // Scroll to top on navigation
+    window.scrollTo(0, 0);
   };
 
   return (
-    <a href={`#${to}`} onClick={handleClick} className={className}>
+    <a 
+      href={`#${to}`} 
+      onClick={handleClick} 
+      className={className}
+      style={style}
+    >
       {children}
     </a>
   );

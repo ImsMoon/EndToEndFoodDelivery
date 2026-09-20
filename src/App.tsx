@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { RouterProvider, useRouter } from './router';
 import { AppProvider } from './context/AppContext';
 import ClientLayout from './components/ClientLayout';
@@ -15,48 +15,72 @@ import POS from './pages/pos/POS';
 
 const AppRoutes: React.FC = () => {
   const { path } = useRouter();
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [currentPath, setCurrentPath] = useState(path);
 
-  // Match routes
-  if (path === '/' || path === '') {
-    return <ClientLayout><Home /></ClientLayout>;
-  }
-  if (path === '/menu' || path.startsWith('/menu?')) {
-    return <ClientLayout><Menu /></ClientLayout>;
-  }
-  if (path.startsWith('/product/')) {
-    return <ClientLayout><ProductDetail /></ClientLayout>;
-  }
-  if (path === '/cart') {
-    return <ClientLayout><Cart /></ClientLayout>;
-  }
-  if (path === '/checkout') {
-    return <ClientLayout><Checkout /></ClientLayout>;
-  }
-  if (path === '/login') {
-    return <ClientLayout><Login /></ClientLayout>;
-  }
-  if (path === '/locations') {
-    return <ClientLayout><Locations /></ClientLayout>;
-  }
-  if (path === '/admin') {
-    return <AdminPanel />;
-  }
-  if (path === '/kitchen') {
-    return <KitchenDisplay />;
-  }
-  if (path === '/pos') {
-    return <POS />;
-  }
+  useEffect(() => {
+    if (path !== currentPath) {
+      setIsTransitioning(true);
+      const timer = setTimeout(() => {
+        setCurrentPath(path);
+        setIsTransitioning(false);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [path, currentPath]);
 
-  // 404
+  const renderPage = () => {
+    const p = currentPath;
+    
+    if (p === '/' || p === '') {
+      return <ClientLayout><Home /></ClientLayout>;
+    }
+    if (p === '/menu' || p.startsWith('/menu?') || p.startsWith('/menu#')) {
+      return <ClientLayout><Menu /></ClientLayout>;
+    }
+    if (p.startsWith('/product/')) {
+      return <ClientLayout><ProductDetail /></ClientLayout>;
+    }
+    if (p === '/cart') {
+      return <ClientLayout><Cart /></ClientLayout>;
+    }
+    if (p === '/checkout') {
+      return <ClientLayout><Checkout /></ClientLayout>;
+    }
+    if (p === '/login') {
+      return <ClientLayout><Login /></ClientLayout>;
+    }
+    if (p === '/locations') {
+      return <ClientLayout><Locations /></ClientLayout>;
+    }
+    if (p === '/admin') {
+      return <AdminPanel />;
+    }
+    if (p === '/kitchen') {
+      return <KitchenDisplay />;
+    }
+    if (p === '/pos') {
+      return <POS />;
+    }
+
+    // 404
+    return (
+      <ClientLayout>
+        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+          <span className="text-6xl block mb-4">🔍</span>
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Page not found</h2>
+          <p className="text-gray-500">The page you're looking for doesn't exist.</p>
+        </div>
+      </ClientLayout>
+    );
+  };
+
   return (
-    <ClientLayout>
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <span className="text-6xl block mb-4">🔍</span>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Page not found</h2>
-        <p className="text-gray-500">The page you're looking for doesn't exist.</p>
-      </div>
-    </ClientLayout>
+    <div 
+      className={`transition-opacity duration-150 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
+    >
+      {renderPage()}
+    </div>
   );
 };
 
