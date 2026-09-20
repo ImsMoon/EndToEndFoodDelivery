@@ -15,8 +15,8 @@ const Login: React.FC = () => {
   const handleEmailLogin = () => { if (email && name) { login({ name, email, method: 'email' }); navigate('/'); } };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4">
-      <div className="max-w-md w-full">
+    <div className="flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-md">
         <div className="bg-white border border-line rounded-2xl p-8">
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-brand rounded-2xl flex items-center justify-center mx-auto mb-4">

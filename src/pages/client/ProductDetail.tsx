@@ -19,7 +19,7 @@ const ProductDetail: React.FC = () => {
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
         <h2 className="text-2xl font-bold mb-4">Product not found</h2>
         <button onClick={() => navigate('/menu')} className="text-brand hover:underline font-semibold">
           ← Back to Menu
@@ -50,7 +50,7 @@ const ProductDetail: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <button
         onClick={() => window.history.back()}
         className="flex items-center gap-2 text-ink-light hover:text-brand mb-6 font-medium"
@@ -58,8 +58,8 @@ const ProductDetail: React.FC = () => {
         <ArrowLeft size={18} /> Back
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div className="bg-white rounded-3xl overflow-hidden border border-line">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="bg-white rounded-2xl overflow-hidden border border-line">
           <img 
             src={product.image} 
             alt={product.name}

@@ -33,7 +33,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   outline-offset: 2px;
 }
 
-#root { min-height: 100vh; }
+/* No min-height on root — let content determine page height */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
 
 .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
 .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -41,16 +46,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Food image placeholder gradient */
+/* Food image placeholder gradients */
 .food-img-bg {
   background: linear-gradient(135deg, #FFF0EC 0%, #FED7AA 50%, #FDBA74 100%);
-}
-.food-img-bg-alt {
-  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FCD34D 100%);
-}
-.food-img-bg-green {
-  background: linear-gradient(135deg, #D1FAE5 0%, #A7F3D0 50%, #6EE7B7 100%);
-}
-.food-img-bg-warm {
-  background: linear-gradient(135deg, #FFE4E6 0%, #FECDD3 50%, #FDA4AF 100%);
 }

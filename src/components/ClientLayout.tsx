@@ -21,19 +21,21 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-cream">
+    <div className="flex flex-col bg-cream" style={{ minHeight: '100dvh' }}>
       {/* Header */}
       <header className="bg-white border-b border-line sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 lg:h-20">
-            <Link to="/" className="flex items-center gap-2.5 group">
+        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center h-16 lg:h-20 gap-4">
+            {/* Logo - left */}
+            <Link to="/" className="flex items-center gap-2.5 shrink-0 group">
               <div className="w-9 h-9 bg-brand rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
                 <span className="text-white text-lg">🍕</span>
               </div>
               <span className="text-xl font-bold text-ink">FoodHub</span>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-1">
+            {/* Navigation - center/left */}
+            <nav className="hidden md:flex items-center gap-1 ml-8">
               {navLinks.map(link => (
                 <Link
                   key={link.path}
@@ -49,7 +51,11 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
               ))}
             </nav>
 
-            <div className="flex items-center gap-2">
+            {/* Spacer */}
+            <div className="flex-1" />
+
+            {/* Actions - right */}
+            <div className="flex items-center gap-2 shrink-0">
               <Link
                 to="/cart"
                 className="relative p-2.5 text-ink-light hover:text-brand hover:bg-brand-light rounded-lg transition-colors"
@@ -94,7 +100,7 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-line">
-            <div className="px-4 py-4 space-y-1">
+            <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 py-4 space-y-1">
               {navLinks.map(link => (
                 <Link
                   key={link.path}
@@ -136,21 +142,23 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         )}
       </header>
 
+      {/* Main content - grows to fill available space */}
       <main className="flex-1">{children}</main>
 
-      <footer className="bg-white border-t border-line mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="col-span-2 md:col-span-1">
+      {/* Footer */}
+      <footer className="bg-white border-t border-line">
+        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+          <div className="grid grid-cols-2 md:grid-cols-12 gap-8">
+            <div className="col-span-2 md:col-span-4">
               <div className="flex items-center gap-2.5 mb-4">
                 <div className="w-8 h-8 bg-brand rounded-lg flex items-center justify-center">
                   <span className="text-white text-sm">🍕</span>
                 </div>
                 <span className="text-lg font-bold text-ink">FoodHub</span>
               </div>
-              <p className="text-sm text-ink-light leading-relaxed">Delicious food delivered to your door. Pizza, burgers, and coffee made with love.</p>
+              <p className="text-sm text-ink-light leading-relaxed max-w-xs">Delicious food delivered to your door. Pizza, burgers, and coffee made with love.</p>
             </div>
-            <div>
+            <div className="md:col-span-2 md:col-start-6">
               <h4 className="font-semibold text-ink mb-4 text-sm">Explore</h4>
               <div className="space-y-2.5 text-sm">
                 <Link to="/menu" className="block text-ink-light hover:text-brand">Menu</Link>
@@ -158,7 +166,7 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 <Link to="/cart" className="block text-ink-light hover:text-brand">Cart</Link>
               </div>
             </div>
-            <div>
+            <div className="md:col-span-2">
               <h4 className="font-semibold text-ink mb-4 text-sm">Tools</h4>
               <div className="space-y-2.5 text-sm">
                 <Link to="/admin" className="block text-ink-light hover:text-brand">Admin</Link>
@@ -166,7 +174,7 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 <Link to="/pos" className="block text-ink-light hover:text-brand">POS</Link>
               </div>
             </div>
-            <div>
+            <div className="md:col-span-2">
               <h4 className="font-semibold text-ink mb-4 text-sm">Contact</h4>
               <div className="space-y-2.5 text-sm text-ink-light">
                 <p>555-FOOD-HUB</p>

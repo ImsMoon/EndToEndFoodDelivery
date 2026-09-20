@@ -13,7 +13,7 @@ const Cart: React.FC = () => {
 
   if (cart.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+      <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
         <ShoppingBag size={64} className="mx-auto text-ink-muted mb-6" />
         <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
         <p className="text-ink-light mb-8">Add some items to get started</p>
@@ -25,7 +25,7 @@ const Cart: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <button onClick={() => window.history.back()} className="flex items-center gap-2 text-ink-light hover:text-brand mb-6 font-medium">
         <ArrowLeft size={18} /> Continue Shopping
       </button>

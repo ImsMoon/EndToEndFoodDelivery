@@ -66,7 +66,7 @@ const AppRoutes: React.FC = () => {
     // 404
     return (
       <ClientLayout>
-        <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+        <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <span className="text-6xl block mb-4">🔍</span>
           <h2 className="text-2xl font-bold text-gray-800 mb-2">Page not found</h2>
           <p className="text-gray-500">The page you're looking for doesn't exist.</p>

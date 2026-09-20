@@ -4,7 +4,7 @@ import { locations } from '../../data/mockData';
 
 const Locations: React.FC = () => {
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
       <div className="mb-8">
         <h1 className="text-3xl lg:text-4xl font-bold mb-2">Our Locations</h1>
         <p className="text-ink-light text-lg">Find a FoodHub restaurant near you</p>
