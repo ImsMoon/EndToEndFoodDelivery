@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../router';
 import { MapPin, Clock, Truck, Store, Armchair, Gift, CreditCard, CheckCircle } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { locations } from '../../data/mockData';

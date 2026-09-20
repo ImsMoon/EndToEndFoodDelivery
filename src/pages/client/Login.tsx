@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '../../router';
 import { useApp } from '../../context/AppContext';
 
 const Login: React.FC = () => {

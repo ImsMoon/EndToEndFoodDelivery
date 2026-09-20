@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useRouter } from '../router';
 import { ShoppingCart, User, Menu, X } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { getCartCount, user, logout } = useApp();
-  const location = useLocation();
+  const { path } = useRouter();
   const cartCount = getCartCount();
 
   const navLinks = [
@@ -26,7 +26,7 @@ const ClientLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             </Link>
             <nav className="hidden md:flex items-center gap-6">
               {navLinks.map(link => (
-                <Link key={link.path} to={link.path} className={`text-sm font-medium transition-colors ${location.pathname === link.path ? 'text-orange-600' : 'text-gray-600 hover:text-orange-600'}`}>
+                <Link key={link.path} to={link.path} className={`text-sm font-medium transition-colors ${path === link.path ? 'text-orange-600' : 'text-gray-600 hover:text-orange-600'}`}>
                   {link.label}
                 </Link>
               ))}

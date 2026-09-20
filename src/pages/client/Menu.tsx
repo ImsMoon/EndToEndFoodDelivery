@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from '../../router';
 import { Search, Filter, Star, ShoppingCart } from 'lucide-react';
 import { products } from '../../data/mockData';
 import { useApp } from '../../context/AppContext';

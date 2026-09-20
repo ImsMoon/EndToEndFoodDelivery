@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from '../../router';
 import { Minus, Plus, ShoppingCart, ArrowLeft, Star } from 'lucide-react';
 import { products, Variant, Addon } from '../../data/mockData';
 import { useApp } from '../../context/AppContext';
 
 const ProductDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const params = useParams();
+  const id = params.id;
   const navigate = useNavigate();
   const { addToCart } = useApp();
   const product = products.find(p => p.id === id);
@@ -49,7 +50,7 @@ const ProductDetail: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6">
+      <button onClick={() => window.history.back()} className="flex items-center gap-2 text-gray-600 hover:text-orange-600 mb-6">
         <ArrowLeft size={18} /> Back
       </button>
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { products } from '../../data/mockData';
 import { LayoutDashboard, Package, Users, Megaphone, Tag, Plus, Trash2, Edit, ShoppingBag, DollarSign, Clock, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../router';
 
 const AdminPanel: React.FC = () => {
   const { orders, staff, banners, campaigns, updateOrderStatus, addStaff, removeStaff, addBanner, removeBanner, addCampaign, removeCampaign } = useApp();

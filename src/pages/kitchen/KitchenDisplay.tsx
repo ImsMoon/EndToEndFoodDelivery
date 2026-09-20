@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Clock, ChefHat, CheckCircle, AlertCircle, ArrowLeft, Flame } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../router';
 import { Order } from '../../data/mockData';
 
 const KitchenDisplay: React.FC = () => {

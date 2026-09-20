@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../router';
 import { ArrowRight, Clock, Truck, MapPin, Star } from 'lucide-react';
 import { products } from '../../data/mockData';
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { products } from '../../data/mockData';
 import { Search, ShoppingCart, Trash2, CreditCard, Banknote, ArrowLeft, Check, Plus, Minus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '../../router';
 
 interface POSItem { product: typeof products[0]; quantity: number; variant?: typeof products[0]['variants'][0]; totalPrice: number; }
 
